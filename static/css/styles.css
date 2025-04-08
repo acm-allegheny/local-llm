@@ -1,0 +1,369 @@
+:root {
+    /* Colors */
+    --primary-color: #2e76eb;
+    --primary-color-hover: #1b4588;
+    --secondary-color: #e8eaed;
+    --background-color: #202124;
+    --border-color: #3c4043;
+    --hover-background-color: #35363a;
+    --text-color: #e8eaed;
+    --text-secondary: #9aa0a6;
+    
+    /* Typography */
+    --font-family: 'Google Sans', 'Roboto', sans-serif;
+    --font-size-xs: 0.875rem;    /* 14px */
+    --font-size-sm: 0.9375rem;   /* 15px */
+    --font-size-base: 1rem;      /* 16px */
+    --font-size-lg: 1.25rem;     /* 20px */
+    --font-size-xl: 1.5rem;      /* 24px */
+    --font-size-2xl: 2.25rem;    /* 36px */
+    
+    /* Font weights */
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    
+    /* Line heights */
+    --line-height-tight: 1.25;
+    --line-height-base: 1.5;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+    --spacing-3xl: 32px;
+    
+    /* Sizes & Dimensions */
+    --border-radius-sm: 6px;
+    --border-radius: 10px;
+    --border-radius-lg: 12px;
+    --border-radius-full: 100px;
+    
+    /* Effects */
+    --transition-speed: 0.3s;
+    --transition-speed-fast: 0.2s;
+    
+    /* Container widths */
+    --container-width-sm: 600px;
+    --container-width-md: 768px;
+    --container-width-lg: 1400px;
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family);
+}
+
+body {
+    background-color: var(--background-color);
+    height: 100vh;
+    display: flex;
+    color: var(--text-color);
+    line-height: var(--line-height-base);
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: all var(--transition-speed-fast) ease;
+}
+
+textarea {
+    background: transparent;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    outline: none;
+    transition: all var(--transition-speed-fast) ease;
+}
+
+textarea::placeholder {
+    color: var(--text-secondary);
+}
+
+/* Typography */
+h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-normal);
+}
+
+/* Main Content Styles */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background: var(--background-color);
+    position: relative;
+    z-index: 1;
+}
+
+/* Chat Styles */
+.chat-container {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-2xl);
+    margin: 0 auto;
+    width: 100%;
+    max-width: var(--container-width-lg);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-color) transparent;
+}
+
+/* Scrollbar Styling */
+.chat-container::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+    background: transparent;
+    margin: var(--spacing-md) 0;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--border-radius-full);
+    transition: background var(--transition-speed-fast);
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Message Styles */
+.message {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-lg) var(--spacing-2xl);
+    max-width: var(--container-width-lg);
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+}
+
+.message.user {
+    align-items: flex-end;
+}
+
+.message.assistant {
+    align-items: flex-start;
+}
+
+.message-bubble {
+    display: flex;
+    gap: var(--spacing-lg);
+    max-width: var(--container-width-md);
+    background: var(--hover-background-color);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+}
+
+.message.user .message-bubble {
+    background: var(--primary-color);
+    color: white;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 var(--border-radius-lg);
+}
+
+.message.assistant .message-bubble {
+    background: var(--hover-background-color);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) var(--border-radius-lg) 0;
+}
+
+.message-content {
+    flex: 1;
+    line-height: var(--line-height-base);
+    font-size: var(--font-size-base);
+    white-space: pre-wrap;
+}
+
+/* Message Info Bar */
+.message-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-lg);
+    opacity: 0;
+    transition: opacity var(--transition-speed-fast) ease;
+    margin-top: var(--spacing-xs);
+}
+
+.message:hover .message-info {
+    opacity: 1;
+}
+
+/* Always show info bar for last message */
+.message:last-child .message-info {
+    opacity: 1;
+}
+
+.message-model {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    color: var(--text-secondary);
+    font-size: var(--font-size-xs);
+}
+
+.model-name {
+    color: inherit;
+    font-size: inherit;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    opacity: 0.7;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.7; }
+    50% { opacity: 0.4; }
+    100% { opacity: 0.7; }
+}
+
+/* Typing indicator animation */
+.typing-animation {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.typing-animation span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--text-secondary);
+    animation: typing-dot 1.4s infinite ease-in-out;
+}
+
+.typing-animation span:nth-child(1) {
+    animation-delay: 0s;
+}
+
+.typing-animation span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.typing-animation span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes typing-dot {
+    0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.6;
+    }
+    30% {
+        transform: translateY(-4px);
+        opacity: 1;
+    }
+}
+
+/* Input Styles */
+.input-container {
+    padding: var(--spacing-lg);
+    max-width: var(--container-width-md);
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+.input-wrapper {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    display: flex;
+    align-items: flex-end;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--background-color);
+    transition: all var(--transition-speed) ease;
+}
+
+.input-wrapper:focus-within {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+}
+
+.input-field {
+    background: transparent;
+    color: var(--text-color);
+    flex: 1;
+    border: none;
+    padding: var(--spacing-sm);
+    font-size: var(--font-size-sm);
+    resize: none;
+    max-height: 200px;
+    outline: none;
+}
+
+.input-field::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+.input-field::-webkit-scrollbar-track {
+    background: transparent;
+    margin: var(--spacing-md) 0;
+}
+
+.input-field::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: var(--border-radius-full);
+    transition: background var(--transition-speed-fast);
+}
+
+.input-field::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+.send-button {
+    padding: var(--spacing-sm);
+    color: var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-speed);
+}
+
+.send-button.active {
+    color: var(--primary-color);
+}
+
+/* Welcome Screen Styles */
+.welcome-screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2xl);
+    color: var(--text-color);
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background: var(--background-color);
+}
+
+.welcome-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-normal);
+}
+
+.welcome-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    max-width: 400px;
+}
